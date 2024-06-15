@@ -27,6 +27,7 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '3.0.1'
     implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.1'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-aop', version: '3.1.2'
     runtimeOnly("com.mysql:mysql-connector-j")
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'

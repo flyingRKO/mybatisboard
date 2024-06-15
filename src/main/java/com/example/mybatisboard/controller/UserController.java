@@ -1,5 +1,6 @@
 package com.example.mybatisboard.controller;
 
+import com.example.mybatisboard.aop.LoginCheck;
 import com.example.mybatisboard.dto.UserDTO;
 import com.example.mybatisboard.dto.request.UserDeleteId;
 import com.example.mybatisboard.dto.request.UserLoginRequest;
@@ -9,7 +10,6 @@ import com.example.mybatisboard.dto.response.UserInfoResponse;
 import com.example.mybatisboard.service.impl.UserServiceImpl;
 import com.example.mybatisboard.utils.SessionUtil;
 import jakarta.servlet.http.HttpSession;
-import lombok.Getter;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -77,10 +77,13 @@ public class UserController {
     }
 
     @PatchMapping("password")
-    public ResponseEntity<LoginResponse> updateUserPassword(@RequestBody UserUpdatePasswordRequest userUpdatePasswordRequest,
-                                                            HttpSession session) {
+    @LoginCheck(type = LoginCheck.UserType.USER)
+    public ResponseEntity<LoginResponse> updateUserPassword(
+            String accountId,
+            @RequestBody UserUpdatePasswordRequest userUpdatePasswordRequest,
+            HttpSession session) {
         ResponseEntity<LoginResponse> responseEntity = null;
-        String id = SessionUtil.getLoginMemberId(session);
+        String id = accountId;
         String beforePassword = userUpdatePasswordRequest.getBeforePassword();
         String afterPassword = userUpdatePasswordRequest.getAfterPassword();
 
